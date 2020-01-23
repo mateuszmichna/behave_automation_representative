@@ -1,0 +1,27 @@
+# Created by Mateusz Michna at 23.01.2020
+Feature: The user opens main page
+
+  # -------------------------------------------------------------------------------------------------------
+  # challenge - Add Teacher Flow
+  @open_main_page_scenario
+    Scenario: Open main page
+    When The user opens Add Teacher Page
+    And The user fills teacher's email field
+    And The user picks teacher's avatar
+    And The user fills teacher's name field
+    And The user fills teacher's full name field
+    And The user fills teacher's brownie points field
+    And The user make teacher as available
+    And The user picks teacher's accent
+    And The user fills teacher's experience field
+    And The user fills teacher's description field
+    And The user fills teacher's intro video field
+    And The user fills teacher's calendly field
+    And The user picks teacher's tags
+    And The user fills teacher's performed lessons field
+    And The user fills teacher's fun fact 1 field
+    And The user fills teacher's fun fact 2 field
+    And The user fills teacher's fun fact 3 field
+    And The user clicks Add another declination 3 times
+    And The user fills teacher's name declination
+    Then The user clicks Add button

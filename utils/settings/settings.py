@@ -1,6 +1,8 @@
 import os
-from utils.settings.platform_browser_settings import get_platform, get_driver_by_platform_name_and_browser, get_browser
-from utils.settings.local_settings import IMPLICITLY_WAIT, USER_PRODUCTION_URL, USER_STAGING_URL, USER_DEV_URL
+from utils.settings.platform_browser_settings import get_platform, get_driver_by_platform_name_and_browser, get_browser, \
+    get_preferable_locator_searching_method
+from utils.settings.local_settings import IMPLICITLY_WAIT, USER_PRODUCTION_URL, USER_STAGING_URL, USER_DEV_URL, \
+    PREFERABLE_LOCATOR_SEARCHING_METHOD
 
 # required
 PRODUCTION_URL = os.environ.get('PRODUCTION_URL', USER_PRODUCTION_URL)
@@ -14,6 +16,7 @@ SYSTEM = os.environ.get('SYSTEM', get_platform())
 BROWSER = os.environ.get('BROWSER', get_browser())
 DRIVER = os.environ.get('DRIVER', get_driver_by_platform_name_and_browser(SYSTEM, BROWSER))
 IMPLICITLY_WAIT = IMPLICITLY_WAIT
+LOCATOR_SEARCHING_METHOD = get_preferable_locator_searching_method(PREFERABLE_LOCATOR_SEARCHING_METHOD)
 
 # other const
 PATH_TO_PROJECT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

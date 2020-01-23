@@ -1,5 +1,6 @@
 from behave.runner import Context
 
+from pages.main_header import MainHeader
 from utils.base_page import BasePage
 from utils.browsers.browser_selector import browser
 from utils.fake_persons.fake_client import FakeClient
@@ -41,6 +42,7 @@ class Environment(Context):
     def __init__(self, runner, driver):
         super().__init__(runner)
         self.base = BasePage(driver)
+        self.main_header = MainHeader(driver)
 
 
 class Stuff(Context):
