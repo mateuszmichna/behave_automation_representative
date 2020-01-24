@@ -2,17 +2,72 @@ import time
 from urllib.parse import urlparse
 
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from utils.custom_element import CustomElement
+from utils.elements_list import ElementsList
 from utils.settings.local_settings import EXPLICITLY_WAIT
+from utils.settings.settings import LOCATOR_SEARCHING_METHOD
 
 
 class BasePage(object):
 
     def __init__(self, driver: WebDriver):
         self.driver = driver
+
+    # -------------------------------------------------------------------------------------------------------
+    # elements
+    def get_element(self,
+                    locator=None,
+                    locator_type=LOCATOR_SEARCHING_METHOD,
+                    element_id=None,
+                    w3c=False,
+                    is_visible=True):
+        """
+        :param locator: "div[class*='something']"
+        :param locator_type: By.XPATH (By can be imported from selenium.webdriver.common.by)
+        :param element_id: if you have element from .find_element() method
+                          you can put it here to convert to CustomElement object
+        :param is_visible: true will cause that WebDriverWait will be looking for visible element,
+                          with false WebdriverWait will be looking for element located in DOM
+        :return: CustomElement object
+        """
+        return CustomElement(self.driver, locator=locator, locator_type=locator_type,
+                             element_id=element_id, w3c=w3c, is_visible=is_visible)
+
+    def get_elements_list(self,
+                          locator=None,
+                          locator_type=LOCATOR_SEARCHING_METHOD,
+                          elements_list=None,
+                          is_visible=True):
+        """
+        :param locator: "div[class*='something']"
+        :param locator_type: By.XPATH (By can be imported from selenium.webdriver.common.by)
+        :param elements_list: if you have elements_list from .find_elements()
+                              method you can put them here to convert to ElementsList object
+        :param is_visible: true will cause that WebDriverWait will be looking for any visible elements,
+                          with false WebdriverWait will be looking for elements located in DOM
+        :return: ElementsList object
+        """
+        return ElementsList(self.driver, locator=locator, locator_type=locator_type,
+                            elements_list=elements_list, is_visible=is_visible)
+
+    def get_element_by_xpath_text(self, partial_xpath_locator, text, is_visible=True):
+        """
+        !!!This is only for use in case when we need to handle multiple elements defined by one locator,
+        but with different text value in them.!!!
+
+        :param partial_xpath_locator: '//div' or '//div[contains(@class, "button")]//span
+        :param text: text to search for in elements defined by locator
+        :param is_visible: true will cause that WebDriverWait will be looking for visible element,
+                          with false WebdriverWait will be looking for element located in DOM
+        :return: CustomElement object
+        """
+        locator = f'{partial_xpath_locator}[contains(text(), "{text}")]'
+        return CustomElement(self.driver, locator=locator, locator_type=By.XPATH, is_visible=is_visible)
 
     # -------------------------------------------------------------------------------------------------------
     # page

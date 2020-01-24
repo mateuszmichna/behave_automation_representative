@@ -1,5 +1,7 @@
 import sys
 
+from selenium.webdriver.common.by import By
+
 from utils.settings.local_settings import SELECTED_BROWSER
 
 LINUX_PLATFORM = 'Linux'
@@ -53,3 +55,17 @@ def get_driver_by_platform_name_and_browser(platform_name, browser):
     if not driver:
         raise Exception("Couldn't find a driver")
     return driver
+
+
+def get_preferable_locator_searching_method(method):
+    methods = {
+        "id": By.ID,
+        "xpath": By.XPATH,
+        "link text": By.LINK_TEXT,
+        "partial link text": By.PARTIAL_LINK_TEXT,
+        "name": By.NAME,
+        "tag name": By.TAG_NAME,
+        "class name": By.CLASS_NAME,
+        "css selector": By.CSS_SELECTOR,
+    }
+    return methods[method]

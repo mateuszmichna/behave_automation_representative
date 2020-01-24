@@ -1,7 +1,6 @@
 import time
 
 from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as ec
@@ -9,10 +8,11 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from utils.helpers import Helpers
 from utils.settings.local_settings import EXPLICITLY_WAIT
+from utils.settings.settings import LOCATOR_SEARCHING_METHOD
 
 
 class CustomElement(WebElement):
-    def __init__(self, driver, locator=None, locator_type=By.CSS_SELECTOR, wait=EXPLICITLY_WAIT, element_id=None,
+    def __init__(self, driver, locator=None, locator_type=LOCATOR_SEARCHING_METHOD, wait=EXPLICITLY_WAIT, element_id=None,
                  w3c=False, is_visible=True):
         """
         :param driver: driver
@@ -39,7 +39,7 @@ class CustomElement(WebElement):
             self.locator = locator
         self.driver = driver
 
-    def get_inner_element(self, locator, locator_type=By.CSS_SELECTOR):
+    def get_inner_element(self, locator, locator_type=LOCATOR_SEARCHING_METHOD):
         """
         :param locator: locator of inner element
         :param locator_type: locator type of inner element
@@ -48,7 +48,7 @@ class CustomElement(WebElement):
         element = self.find_element(locator_type, locator)
         return CustomElement(self.driver, element_id=element.id)
 
-    def get_inner_elements_list(self, locator, locator_type=By.CSS_SELECTOR):
+    def get_inner_elements_list(self, locator, locator_type=LOCATOR_SEARCHING_METHOD):
         """
         The outcome of this method should be put into
         constructor of ElementsList in order to get access to proper methods
